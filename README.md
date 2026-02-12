@@ -1,4 +1,4 @@
-# What This Project Proves — Technical Findings and Impact
+# Neural Processing Unit (NPU) — Quantized Activation Accelerator
 
 This project demonstrates that fundamental neural inference operations can be implemented directly in FPGA hardware using deterministic fixed-point arithmetic while maintaining strict mathematical correctness. Through randomized hardware–software co-verification, the accelerator reproduces canonical neural activation behavior with zero numerical error.
 
