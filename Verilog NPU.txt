@@ -1,0 +1,105 @@
+/*
+ * Project: FPGA NPU Accelerator (16-bit Signed to 8-bit Quantized)
+ * Platform: Tang Nano 9K (Gowin GW1NR-9C)
+ * Description: 
+ * Receives 16-bit weights (Little-Endian) via UART, applies a -25 Bias 
+ * and ReLU activation, and returns the 8-bit MSB of the result.
+ */
+
+module npu_accelerator_top (
+    input clk,          // Onboard 27MHz Crystal (Pin 52)
+    input rst_n,        // Reset Button (Pin 4)
+    input uart_rx,      // UART RX (Pin 18)
+    output uart_tx,     // UART TX (Pin 17)
+    output [5:0] leds   // Status LEDs
+);
+
+    // --- Internal Signals ---
+    wire [7:0] raw_rx_byte;
+    wire rx_ready;
+    wire tx_busy;
+    reg tx_trigger;
+    reg [7:0] processed_byte;
+    
+    // --- NPU State Machine ---
+    reg [7:0] lsb_buffer;
+    reg is_msb_cycle = 0;
+    reg [15:0] weight_count = 0;
+
+    // Architectural Constant
+    localparam signed [15:0] BIAS = -16'sd25;
+
+    // --- UART Hardware Instances ---
+    uart_rx #(.BAUD(115200)) rx_module (
+        .clk(clk), .rx(uart_rx), .data(raw_rx_byte), .tick(rx_ready)
+    );
+
+    uart_tx #(.BAUD(115200)) tx_module (
+        .clk(clk), .start(tx_trigger), .data(processed_byte), .tx(uart_tx), .busy(tx_busy)
+    );
+
+    // --- NPU Compute Engine (The "Transformer") ---
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            is_msb_cycle <= 0;
+            tx_trigger <= 0;
+            weight_count <= 0;
+        end else begin
+            tx_trigger <= 1'b0; // Default pulse state
+            
+            if (rx_ready) begin
+                if (!is_msb_cycle) begin
+                    // Cycle 1: Receive Least Significant Byte (Little Endian)
+                    lsb_buffer <= raw_rx_byte;
+                    is_msb_cycle <= 1;
+                end else begin
+                    // Cycle 2: Receive Most Significant Byte & Process
+                    // Reassemble 16-bit word and apply Bias + ReLU
+                    if ($signed({raw_rx_byte, lsb_buffer}) + BIAS < 0) begin
+                        processed_byte <= 8'h00; // ReLU Activation
+                    end else begin
+                        processed_byte <= raw_rx_byte; // Quantized Output
+                    end
+                    
+                    tx_trigger <= 1'b1;
+                    is_msb_cycle <= 0;
+                    weight_count <= weight_count + 1'b1;
+                end
+            end
+        end
+    end
+
+    // Visual feedback of weight processing
+    assign leds = ~weight_count[5:0];
+
+endmodule
+
+// Standard UART Receiver Definition
+module uart_rx #(parameter BAUD = 115200) (input clk, rx, output reg [7:0] data, output reg tick);
+    localparam WAIT = 27000000 / BAUD;
+    reg [31:0] cnt = 0; reg [3:0] st = 0; reg act = 0;
+    always @(posedge clk) begin
+        tick <= 0;
+        if (!act) begin
+            if (rx == 0) begin if (cnt < (WAIT/2)) cnt <= cnt + 1; else begin cnt <= 0; act <= 1; st <= 0; end end
+            else cnt <= 0;
+        end else begin
+            if (cnt < (WAIT - 1)) cnt <= cnt + 1;
+            else begin cnt <= 0; if (st < 8) begin data[st[2:0]] <= rx; st <= st + 1; end else begin act <= 0; tick <= 1; end end
+        end
+    end
+endmodule
+
+// Standard UART Transmitter Definition
+module uart_tx #(parameter BAUD = 115200) (input clk, start, [7:0] data, output reg tx, busy);
+    localparam WAIT = 27000000 / BAUD;
+    reg [31:0] cnt = 0; reg [3:0] st = 0; reg [7:0] d;
+    initial {tx, busy} = 2'b10;
+    always @(posedge clk) begin
+        if (!busy) begin if (start) begin d <= data; busy <= 1; st <= 0; cnt <= 0; tx <= 0; end end
+        else begin
+            if (cnt < (WAIT - 1)) cnt <= cnt + 1;
+            else begin cnt <= 0; if (st < 8) begin tx <= d[st[2:0]]; st <= st + 1; end else if (st == 8) begin tx <= 1; st <= st + 1; end else busy <= 0; end
+        end
+    end
+endmodule
