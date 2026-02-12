@@ -102,4 +102,5 @@ module uart_tx #(parameter BAUD = 115200) (input clk, start, [7:0] data, output 
             else begin cnt <= 0; if (st < 8) begin tx <= d[st[2:0]]; st <= st + 1; end else if (st == 8) begin tx <= 1; st <= st + 1; end else busy <= 0; end
         end
     end
+
 endmodule
