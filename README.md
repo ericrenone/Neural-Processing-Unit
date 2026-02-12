@@ -15,7 +15,6 @@ This proves:
 - Quantized output projection preserves functional correctness  
 - Hardware datapaths can faithfully reproduce neural mathematical behavior  
 
-This level of verification is the standard required in commercial AI accelerator validation.
 
 ---
 
