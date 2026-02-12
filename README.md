@@ -98,4 +98,43 @@ This work provides a complete proof that quantized neural inference can be:
 - Scaled into larger accelerator architectures  
 
 
+```markdown
+# References for FPGA Neural Processing Unit (NPU) Project
+
+## Foundational Work on Neural Network Quantization
+
+- **R. Krishnamoorthi, “Quantizing deep convolutional networks for efficient inference: A whitepaper”**  
+  A foundational overview of quantization techniques for neural network inference with integer weights and activations, showing how low-precision representation maintains accuracy and reduces computational cost. [Read here](https://www.emergentmind.com/papers/1806.08342?utm_source=chatgpt.com)
+
+- **IEEE: “Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference”**  
+  A canonical conference work presenting methods for training neural networks that support integer-only inference, underpinning fixed-point and quantized deployment strategies. [Read here](https://ieeexplore.ieee.org/document/8578384?utm_source=chatgpt.com)
+
+## Quantized Neural Networks on FPGA and Hardware Acceleration
+
+- **“FPGA-QNN: Quantized Neural Network Hardware Acceleration on FPGAs” — Mustafa Tasci et al.**  
+  Demonstrates FPGA implementations of quantized neural networks (QNNs), validating integer quantization for efficient hardware acceleration and energy-efficient inference. [Read here](https://www.mdpi.com/2076-3417/15/2/688?utm_source=chatgpt.com)
+
+- **M. Pistellato et al., “Quantization-Aware Neural Network Layers with High-Throughput FPGA Implementation for Edge AI”**  
+  Discusses integer arithmetic neural layers for FPGA inference with configurable precision, reinforcing the significance of quantized designs for real-time embedded applications. [Read here](https://www.mdpi.com/1424-8220/23/10/4667?utm_source=chatgpt.com)
+
+## Hardware Architecture and FPGA-Focused Research
+
+- **Y. Umuroglu et al., “LogicNets: Co-Designed Neural Networks and Circuits for Extreme-Throughput Applications”**  
+  Maps quantized neural logic directly to FPGA circuits for massively parallel, pipelinable neural inference. [Read here](https://arxiv.org/abs/2004.03021?utm_source=chatgpt.com)
+
+- **Erwei Wang et al., “LUTNet: Learning FPGA Configurations for Highly Efficient Neural Network Inference”**  
+  Uses FPGA LUTs as inference operators, illustrating hardware-specific mapping for efficient quantized inference. [Read here](https://arxiv.org/abs/1910.12625?utm_source=chatgpt.com)
+
+## Quantization in Practical AI Systems
+
+- **TensorFlow Blog — “Faster Quantized Inference with XNNPACK”**  
+  Explains optimized integer inference pathways for quantized models, showing latency and throughput improvements. [Read here](https://blog.tensorflow.org/2021/09/faster-quantized-inference-with-xnnpack.html?utm_source=chatgpt.com)
+
+- **Google Cloud Blog — “Accurate Quantized Training (AQT) for TPU v5e”**  
+  Describes TPU quantization practices ensuring forward pass quantized operations match training precision, illustrating commercial deployment. [Read here](https://cloud.google.com/blog/products/compute/accurate-quantized-training-aqt-for-tpu-v5e?utm_source=chatgpt.com)
+```
+
+
 > This work provides an experimentally validated foundation for scalable AI accelerators, demonstrating correct, real-world neural computation directly in silicon rather than through simulation.
+
+
