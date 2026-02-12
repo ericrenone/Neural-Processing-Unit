@@ -53,8 +53,6 @@ This confirms:
 - Minimal control logic is required  
 - High throughput can be achieved through parallel scaling  
 
-This architecture mirrors commercial accelerator pipelines.
-
 ---
 
 ## Formal Hardware–Software Co-Verification
@@ -66,7 +64,6 @@ The project applies a professional golden-model validation strategy:
 - Bit-for-bit comparison with software reference  
 - Real-time performance measurement  
 
-This workflow ensures physical hardware behavior exactly matches the mathematical model and is the standard approach in silicon development.
 
 ---
 
@@ -79,8 +76,6 @@ The combined results establish that:
 - Streaming datapaths provide deterministic real-time operation  
 - Verification can be performed rigorously at scale  
 
-This forms the foundational building block of scalable AI accelerator systems.
-
 ---
 
 ## Practical Significance
@@ -90,8 +85,6 @@ The implemented compute primitive is the same atomic operation used within:
 - Tensor processing pipelines  
 - Quantized inference engines  
 - Edge AI hardware accelerators  
-
-Rather than simulation or software emulation, this project demonstrates physical neural computation operating in real silicon with validated correctness.
 
 ---
 
@@ -104,5 +97,5 @@ This work provides a complete proof that quantized neural inference can be:
 - Operated deterministically at real-time speeds  
 - Scaled into larger accelerator architectures  
 
-It establishes a solid, experimentally validated foundation for advanced neural hardware systems.
 
+> This work provides an experimentally validated foundation for scalable AI accelerators, demonstrating correct, real-world neural computation directly in silicon rather than through simulation.
