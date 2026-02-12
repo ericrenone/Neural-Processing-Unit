@@ -8,7 +8,7 @@ This project demonstrates that fundamental neural inference operations can be im
 
 - LUT‑only quantized inference path
 
-- Streaming datapath with rigorous co‑verification
+- Streaming datapath with hardware–software co-verification
 
 - No reliance on DSP slices
 
