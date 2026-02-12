@@ -28,7 +28,6 @@ The experimental results confirm:
 - Quantized inference maintains deterministic and stable results  
 - Precision reduction can be applied directly in hardware  
 
-This directly supports the design philosophy behind modern AI hardware platforms.
 
 ---
 
@@ -41,8 +40,6 @@ This demonstrates:
 - Hardware activations produce realistic neural sparsity distributions  
 - Many operations naturally collapse to zero values  
 - Future designs can exploit sparsity for efficiency gains  
-
-This phenomenon is heavily leveraged in high-performance neural accelerators.
 
 ---
 
