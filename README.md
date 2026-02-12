@@ -1,6 +1,16 @@
 # NPU — Quantized Activation Accelerator
 
-This project demonstrates that fundamental neural inference operations can be implemented directly in FPGA hardware using deterministic fixed-point arithmetic while maintaining strict mathematical correctness. Through randomized hardware–software co-verification, the accelerator reproduces canonical neural activation behavior with zero numerical error.
+This project demonstrates that fundamental neural inference operations can be implemented directly in FPGA hardware using deterministic fixed-point arithmetic while maintaining strict mathematical correctness. Through randomized hardware–software co-verification, the accelerator reproduces canonical neural activation behavior with zero error.
+
+## Features
+
+- Full bit‑exact hardware implementation
+
+- LUT‑only quantized inference path
+
+- Streaming datapath with rigorous co‑verification
+
+- No reliance on DSP slices
 
 ---
 
