@@ -1,5 +1,5 @@
 /*
- * Project: FPGA NPU Accelerator (16-bit Signed to 8-bit Quantized)
+ * Project: FPGA QPU Accelerator (16-bit Signed to 8-bit Quantized)
  * Platform: Tang Nano 9K (Gowin GW1NR-9C)
  * Description: 
  * Receives 16-bit weights (Little-Endian) via UART, applies a -25 Bias 
@@ -104,3 +104,4 @@ module uart_tx #(parameter BAUD = 115200) (input clk, start, [7:0] data, output 
     end
 
 endmodule
+
